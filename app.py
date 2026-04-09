@@ -87,6 +87,70 @@ Below is the filtered dataset based on the selections in the sticky header.
 Use the category dropdown or search box above to refine the results.
 """)
 
+st.title("Filtered Table")
+
+st.markdown("""
+### 📊 Current View
+Below is the filtered dataset based on the selections in the sticky header.  
+Use the category dropdown or search box above to refine the results.
+""")
+
+st.title("Filtered Table")
+
+st.markdown("""
+### 📊 Current View
+Below is the filtered dataset based on the selections in the sticky header.  
+Use the category dropdown or search box above to refine the results.
+""")
+
+st.title("Filtered Table")
+
+st.markdown("""
+### 📊 Current View
+Below is the filtered dataset based on the selections in the sticky header.  
+Use the category dropdown or search box above to refine the results.
+""")
+
+st.title("Filtered Table")
+
+st.markdown("""
+### 📊 Current View
+Below is the filtered dataset based on the selections in the sticky header.  
+Use the category dropdown or search box above to refine the results.
+""")
+st.title("Filtered Table")
+
+st.markdown("""
+### 📊 Current View
+Below is the filtered dataset based on the selections in the sticky header.  
+Use the category dropdown or search box above to refine the results.
+""")
+
+
+st.title("Filtered Table")
+
+st.markdown("""
+### 📊 Current View
+Below is the filtered dataset based on the selections in the sticky header.  
+Use the category dropdown or search box above to refine the results.
+""")
+
+st.title("Filtered Table")
+
+st.markdown("""
+### 📊 Current View
+Below is the filtered dataset based on the selections in the sticky header.  
+Use the category dropdown or search box above to refine the results.
+""")
+
+st.title("Filtered Table")
+
+st.markdown("""
+### 📊 Current View
+Below is the filtered dataset based on the selections in the sticky header.  
+Use the category dropdown or search box above to refine the results.
+""")
+
 # ----------------------------------------------------
 # ✅ Filtered table
 # ----------------------------------------------------
