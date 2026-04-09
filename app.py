@@ -1,51 +1,47 @@
 import streamlit as st
 
-st.set_page_config(page_title="Sticky Row Demo", layout="wide")
+st.set_page_config(page_title="Sticky Header", layout="wide")
 
-# ------------------------------------------------
-# ✅ Sticky row CSS (keeps Streamlit theme colors)
-# ------------------------------------------------
+# ----------------------------------------------------
+# ✅ CSS that makes a chosen container sticky using :has()
+# ----------------------------------------------------
 st.markdown("""
-    <style>
-        /* Sticky row bar */
-        .sticky-row {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 10000;
-            padding: 6px 16px;
-            background-color: var(--background-color);  /* uses Streamlit theme */
-            border-bottom: 1px solid #ddd;
-        }
+<style>
 
-        /* Push main content down so it's not hidden */
-        .main > div {
-            padding-top: 85px !important;
-        }
-    </style>
+div[data-testid="stVerticalBlock"] div:has(div.fixed-header-marker) {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    background: var(--background-color);
+    padding-bottom: 8px;
+    padding-top: 8px;
+    border-bottom: 1px solid #ddd;
+}
+
+.fixed-header-marker { height: 0px; }
+
+</style>
 """, unsafe_allow_html=True)
 
-# ------------------------------------------------
-# ✅ Sticky row with widgets (fake table row)
-# ------------------------------------------------
-st.markdown('<div class="sticky-row">', unsafe_allow_html=True)
+# ----------------------------------------------------
+# ✅ This container becomes sticky because of the marker
+# ----------------------------------------------------
+sticky = st.container()
+sticky.markdown("<div class='fixed-header-marker'></div>", unsafe_allow_html=True)
 
-col1, col2, col3 = st.columns([1, 2, 1])
+# ✅ Horizontal layout (your fake table row)
+col1, col2, col3 = sticky.columns([1, 2, 1])
 with col1:
-    category = st.selectbox("Category", ["All", "A", "B", "C"], key="cat")
+    category = st.selectbox("Category", ["All", "A", "B", "C"])
 with col2:
-    search = st.text_input("Search…", key="search")
+    search = st.text_input("Search…")
 with col3:
-    apply = st.button("Apply Filters", key="apply")
+    st.button("Apply Filters")
 
-st.markdown('</div>', unsafe_allow_html=True)
-
-# ------------------------------------------------
+# ----------------------------------------------------
 # ✅ Long scrollable content
-# ------------------------------------------------
-st.title("Scrollable Content Area")
-
-for i in range(1, 60):
+# ----------------------------------------------------
+st.title("Scrollable content")
+for i in range(60):
     st.write(f"### Row {i}")
-    st.write("Lorem ipsum dolor sit amet, consectetur adipiscing elit. " * 10)
+    st.write("Lorem ipsum dolor sit amet " * 8)
