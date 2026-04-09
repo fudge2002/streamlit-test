@@ -37,7 +37,6 @@ st.markdown("""
 with st.sidebar:
     st.header("Sidebar Settings")
     st.write("This sidebar can collapse and the sticky header still works.")
-
     show_raw = st.checkbox("Show raw dataset", False)
 
 # ----------------------------------------------------
@@ -71,19 +70,26 @@ with col3:
 # ----------------------------------------------------
 filtered = data.copy()
 
-# Category filter
 if category_filter != "All":
     filtered = filtered[filtered["Category"] == category_filter]
 
-# Search filter
 if search_filter:
     filtered = filtered[filtered["Item"].str.contains(search_filter, case=False)]
 
 # ----------------------------------------------------
-# ✅ Content below sticky header
+# ✅ TITLE + TEXT ABOVE TABLE
 # ----------------------------------------------------
 st.title("Filtered Table")
 
+st.markdown("""
+### 📊 Current View
+Below is the filtered dataset based on the selections in the sticky header.  
+Use the category dropdown or search box above to refine the results.
+""")
+
+# ----------------------------------------------------
+# ✅ Filtered table
+# ----------------------------------------------------
 st.dataframe(filtered, use_container_width=True)
 
 if show_raw:
