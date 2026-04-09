@@ -1,59 +1,91 @@
 import streamlit as st
+import pandas as pd
 
-st.set_page_config(page_title="Sticky Header", layout="wide")
+st.set_page_config(page_title="Sticky Filters + Sidebar", layout="wide")
 
 # ----------------------------------------------------
-# ✅ Sticky header styling improvements
+# ✅ Sticky header styling (no gaps + dark background)
 # ----------------------------------------------------
 st.markdown("""
 <style>
 
-    /* Make the sticky container actually sticky */
+    /* Sticky main filter bar */
     div[data-testid="stVerticalBlock"] div:has(div.fixed-header-marker) {
         position: sticky;
         top: 0;
         z-index: 9999;
-
-        /* ✅ Solid background so text below doesn't show through */
-        background: rgba(0, 0, 0, 0.70); 
-
-        /* ✅ Optional: glass/blur effect */
-        backdrop-filter: blur(6px);
-
-        /* ✅ Remove white gap effect */
-        margin-bottom: 0;
         padding-top: 8px;
         padding-bottom: 8px;
 
-        /* ✅ Divider line at bottom */
-        border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+        /* ✅ Dark translucent background */
+        background: rgba(0, 0, 0, 0.70);
+        backdrop-filter: blur(6px);
+
+        /* ✅ Smooth bottom border */
+        border-bottom: 1px solid rgba(255,255,255,0.15);
+        margin-bottom: 0;
     }
 
-    /* Invisible marker to target this container */
     .fixed-header-marker { height: 0px; }
 
 </style>
 """, unsafe_allow_html=True)
 
 # ----------------------------------------------------
-# ✅ Sticky header container
+# ✅ SIDEBAR (collapsible)
+# ----------------------------------------------------
+with st.sidebar:
+    st.header("Sidebar Settings")
+    st.write("This sidebar can collapse and the sticky header still works.")
+
+    show_raw = st.checkbox("Show raw dataset", False)
+
+# ----------------------------------------------------
+# ✅ Sample data for filtering
+# ----------------------------------------------------
+data = pd.DataFrame({
+    "Category": ["A", "A", "B", "B", "C", "C"] * 10,
+    "Item": [f"Item {i}" for i in range(60)],
+    "Value": [i * 3 for i in range(60)]
+})
+
+# ----------------------------------------------------
+# ✅ Sticky header (filters)
 # ----------------------------------------------------
 sticky = st.container()
 sticky.markdown("<div class='fixed-header-marker'></div>", unsafe_allow_html=True)
 
-# ✅ Horizontal layout (fake table row)
 col1, col2, col3 = sticky.columns([1, 2, 1])
+
 with col1:
-    category = st.selectbox("Category", ["All", "A", "B", "C"])
+    category_filter = st.selectbox("Category", ["All", "A", "B", "C"], key="cat")
+
 with col2:
-    search = st.text_input("Search…")
+    search_filter = st.text_input("Search item…", key="search")
+
 with col3:
-    st.button("Apply Filters")
+    apply = st.button("Apply Filters", key="apply")
 
 # ----------------------------------------------------
-# ✅ Scrollable content
+# ✅ Apply filtering logic
 # ----------------------------------------------------
-st.title("Scrollable content")
-for i in range(60):
-    st.write(f"### Row {i}")
-    st.write("Lorem ipsum dolor sit amet " * 8)
+filtered = data.copy()
+
+# Category filter
+if category_filter != "All":
+    filtered = filtered[filtered["Category"] == category_filter]
+
+# Search filter
+if search_filter:
+    filtered = filtered[filtered["Item"].str.contains(search_filter, case=False)]
+
+# ----------------------------------------------------
+# ✅ Content below sticky header
+# ----------------------------------------------------
+st.title("Filtered Table")
+
+st.dataframe(filtered, use_container_width=True)
+
+if show_raw:
+    st.subheader("Raw Data")
+    st.dataframe(data, use_container_width=True)
