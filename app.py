@@ -26,9 +26,10 @@ st.markdown("""
 sticky = st.container()
 with sticky:
     st.markdown("### 🔍 Filters (Sticky Header)")
+    
     col1, col2, col3 = st.columns(3)
     with col1:
-        category = st.selectbox("Category", ["All", "A", B", "C"])
+        category = st.selectbox("Category", ["All", "A", "B", "C"])
     with col2:
         search = st.text_input("Search")
     with col3:
